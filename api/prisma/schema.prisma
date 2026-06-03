@@ -1,0 +1,30 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Source {
+  id        String   @id @default(cuid())
+  name      String
+  url       String   @unique
+  category  String?
+  articles  Article[]
+  createdAt DateTime @default(now())
+}
+
+model Article {
+  id          String   @id @default(cuid())
+  title       String
+  link        String   @unique
+  content     String?
+  publishedAt DateTime?
+  hash        String   @unique
+
+  sourceId    String
+  source      Source   @relation(fields: [sourceId], references: [id])
+
+  createdAt   DateTime @default(now())
+}

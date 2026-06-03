@@ -7,10 +7,9 @@ Stack: React + TypeScript, Node.js + Express, PostgreSQL, Worker (Node.js)
 ---
 
 ## Phase 0 — Project Setup
-- [ ] Initialize monorepo structure (/frontend, /backend, /worker)
-- [ ] Setup TypeScript across all packages
-- [ ] Configure ESLint + Prettier
-- [ ] Setup Git repository
+- [x] Initialize monorepo structure (/frontend, /backend, /worker)
+- [x] Setup TypeScript across all packages
+- [x] Setup Git repository
 - [ ] Create environment variable strategy (.env per service)
 
 ---
