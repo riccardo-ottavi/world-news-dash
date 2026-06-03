@@ -10,13 +10,13 @@ Stack: React + TypeScript, Node.js + Express, PostgreSQL, Worker (Node.js)
 - [x] Initialize monorepo structure (/frontend, /backend, /worker)
 - [x] Setup TypeScript across all packages
 - [x] Setup Git repository
-- [ ] Create environment variable strategy (.env per service)
+- [x] Create environment variable strategy (.env per service)
 
 ---
 
 ## Phase 1 — Data Sources (RSS)
-- [ ] Select initial RSS sources (BBC, Reuters, AP, ANSA, Il Post, TechCrunch)
-- [ ] Store sources in database schema
+- [x] Select initial RSS sources (BBC, Reuters, AP, ANSA, Il Post, TechCrunch)
+- [x] Store sources in database schema
 - [ ] Verify RSS accessibility for each source
 - [ ] Build RSS fetch proof-of-concept script
 

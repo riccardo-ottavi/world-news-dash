@@ -1,5 +1,6 @@
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -7,24 +8,22 @@ generator client {
 }
 
 model Source {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   name      String
-  url       String   @unique
+  url       String    @unique
   category  String?
+  createdAt DateTime  @default(now())
   articles  Article[]
-  createdAt DateTime @default(now())
 }
 
 model Article {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   title       String
-  link        String   @unique
+  link        String    @unique
   content     String?
   publishedAt DateTime?
-  hash        String   @unique
-
+  hash        String    @unique
   sourceId    String
-  source      Source   @relation(fields: [sourceId], references: [id])
-
-  createdAt   DateTime @default(now())
+  createdAt   DateTime  @default(now())
+  source      Source    @relation(fields: [sourceId], references: [id])
 }
