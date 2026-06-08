@@ -1,3 +1,4 @@
+import "dotenv/config";
 import Parser from "rss-parser";
 import { PrismaClient } from "@prisma/client";
 
@@ -14,6 +15,7 @@ async function run() {
 
     for (const item of feed.items) {
       if (!item.link) continue;
+      console.log(item)
 
       try {
         await prisma.article.create({
