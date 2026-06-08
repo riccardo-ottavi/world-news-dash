@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { fetchNews } from "../api/news";
+import NewsCard from "./NewsCard";
 
 export default function NewsFeed() {
-  const [news, setNews] = useState([]);
+  const [news, setNews] = useState<any[]>([]);
 
   useEffect(() => {
     fetchNews().then(setNews);
@@ -13,10 +14,7 @@ export default function NewsFeed() {
       <h1>News</h1>
 
       {news.map((item: any) => (
-        <div key={item.id}>
-          <h3>{item.title}</h3>
-          <p>{item.source?.name}</p>
-        </div>
+        <NewsCard key={item.id} item={item} />
       ))}
     </div>
   );

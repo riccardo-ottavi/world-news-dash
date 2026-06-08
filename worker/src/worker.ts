@@ -1,27 +1,16 @@
 import Parser from "rss-parser";
-import { prisma } from "./prisma";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 const parser = new Parser();
 
-const FEEDS = [
-  "https://feeds.bbci.co.uk/news/world/rss.xml",
-  "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
-];
-
 async function run() {
-  for (const url of FEEDS) {
-    console.log("Fetching:", url);
+  const sources = await prisma.source.findMany();
 
-    const feed = await parser.parseURL(url);
+  for (const source of sources) {
+    console.log(`Fetching: ${source.url}`);
 
-    const source = await prisma.source.upsert({
-      where: { url },
-      update: {},
-      create: {
-        name: feed.title || "Unknown",
-        url,
-        category: "world"
-      }
-    });
+    const feed = await parser.parseURL(source.url);
 
     for (const item of feed.items) {
       if (!item.link) continue;
@@ -32,20 +21,23 @@ async function run() {
             title: item.title || "No title",
             link: item.link,
             content: item.contentSnippet || "",
-            publishedAt: item.pubDate ? new Date(item.pubDate) : null,
+            publishedAt: item.pubDate
+              ? new Date(item.pubDate)
+              : null,
             hash: item.link,
-            sourceId: source.id
-          }
+            sourceId: source.id,
+          },
         });
-      } catch (e) {
-        // duplicato → skip
+      } catch {
+        
         continue;
       }
     }
   }
 
-  console.log("DONE");
   await prisma.$disconnect();
 }
 
-run().catch(console.error);
+run()
+  .then(() => console.log("DONE"))
+  .catch(console.error);
