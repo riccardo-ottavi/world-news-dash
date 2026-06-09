@@ -17,3 +17,19 @@ export type Article = {
   createdAt?: string;
   source?: Source;
 };
+
+export type NewsPreviewItem = {
+  id: string;
+  title: string;
+  sourceName: string;
+  category?: string | null;
+  highlight: string;
+  score: number;
+  tags: string[];
+};
+
+export type NewsPreview = {
+  date: string;
+  summary: string;
+  items: NewsPreviewItem[];
+};

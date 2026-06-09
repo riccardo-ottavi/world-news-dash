@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 import { expandCategoryAliases } from "../lib/categoryHelpers";
+import { buildNewsPreview } from "../lib/preview";
 
 export const getNews = async (
   req: Request,
@@ -40,6 +41,41 @@ export const getNews = async (
 
     res.status(500).json({
       message: "Errore nel recupero delle news",
+    });
+  }
+};
+
+export const getNewsPreview = async (
+  _req: Request,
+  res: Response
+) => {
+  try {
+    const since = new Date();
+    since.setDate(since.getDate() - 1);
+
+    const articles = await prisma.article.findMany({
+      where: {
+        publishedAt: {
+          gte: since,
+        },
+      },
+      include: {
+        source: true,
+      },
+      orderBy: {
+        publishedAt: "desc",
+      },
+      take: 12,
+    });
+
+    const preview = buildNewsPreview(articles);
+
+    res.status(200).json(preview);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Errore nel recupero dell'anteprima delle news",
     });
   }
 };
