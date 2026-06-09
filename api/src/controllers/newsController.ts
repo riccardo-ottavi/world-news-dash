@@ -1,12 +1,30 @@
 import { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
+import { expandCategoryAliases } from "../lib/categoryHelpers";
 
 export const getNews = async (
   req: Request,
   res: Response
 ) => {
   try {
+    const { category, sourceId } = req.query as { [key: string]: string | undefined };
+
+    const where: any = {};
+
+    if (sourceId) {
+      where.sourceId = sourceId;
+    }
+
+    if (category) {
+      where.source = {
+        category: {
+          in: expandCategoryAliases(category),
+        },
+      };
+    }
+
     const articles = await prisma.article.findMany({
+      where,
       include: {
         source: true,
       },
