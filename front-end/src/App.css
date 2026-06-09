@@ -7,4 +7,11 @@
 .news-card{
   margin-bottom: 10px;
   border: 1px solid black;
+  width: calc((100vw / 3) - 20px);
+}
+
+.news-feed{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 }

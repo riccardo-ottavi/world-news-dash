@@ -10,12 +10,13 @@ export default function NewsFeed() {
   }, []);
 
   return (
-    <div>
-      <h1>News</h1>
-
+    <>
+    <h1>News</h1>
+    <div className="news-feed">
       {news.map((item: any) => (
         <NewsCard key={item.id} item={item} />
       ))}
     </div>
+    </>
   );
 }
