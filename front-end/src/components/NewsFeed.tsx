@@ -55,21 +55,6 @@ export default function NewsFeed() {
         <section style={{ marginBottom: 16, padding: 16, border: "1px solid #ccc", borderRadius: 8, background: "#f9f9f9" }}>
           <h2>Anteprima del giorno</h2>
           <p style={{ whiteSpace: "pre-wrap", lineHeight: 1.5 }}>{preview.summary}</p>
-          <div style={{ marginTop: 12 }}>
-            {preview.items.map((item) => (
-              <div key={item.id} style={{ marginBottom: 12 }}>
-                <div>
-                  <strong>{item.title}</strong>{" "}
-                  <span style={{ color: "#555" }}>({item.sourceName})</span>
-                </div>
-                <div style={{ fontSize: 12, color: "#666", marginTop: 4 }}>
-                  {item.tags.length ? item.tags.join(" • ") : ""}
-                  {item.tags.length ? " • " : ""}
-                  score {item.score}
-                </div>
-              </div>
-            ))}
-          </div>
         </section>
       ) : null}
 
