@@ -12,6 +12,9 @@ app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use("/news", newsRoutes_1.default);
 app.use("/sources", sourceRoutes_1.default);
+app.get("/health", (req, res) => {
+    res.json({ status: "healthy" });
+});
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
