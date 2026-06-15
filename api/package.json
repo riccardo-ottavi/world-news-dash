@@ -5,10 +5,14 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node src/server.ts",
-    "seed": "ts-node prisma/seed.ts",
-    "build": "tsc",
+    "seed": "node prisma/seed.js",
+    "build": "prisma generate && tsc",
+    "postinstall": "prisma generate",
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   },
   "keywords": [],
   "author": "",

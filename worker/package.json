@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/worker.ts",
-    "build": "tsc"
+    "dev": "ts-node src/worker.ts",
+    "build": "prisma generate && tsc",
+    "postinstall": "prisma generate",
+    "start": "node dist/worker.js"
   },
   "keywords": [],
   "author": "",
