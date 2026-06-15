@@ -3,6 +3,7 @@ import cors from "cors";
 
 import newsRoutes from "./routes/newsRoutes";
 import sourceRoutes from "./routes/sourceRoutes";
+import workerRoutes from "./routes/workerRoutes";
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 
 app.use("/news", newsRoutes);
 app.use("/sources", sourceRoutes);
+app.use("/run-worker", workerRoutes);
 
 app.get("/health", (req, res) => {
   res.json({ status: "healthy" });

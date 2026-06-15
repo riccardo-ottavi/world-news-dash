@@ -1,4 +1,3 @@
-import "dotenv/config";
 import axios from "axios";
 import Parser from "rss-parser";
 import { PrismaClient } from "@prisma/client";
@@ -14,7 +13,7 @@ export async function runWorker() {
 
     console.log(`Fetching: ${feedUrl}`);
 
-    let feed;
+    let feed: any;
 
     try {
       const response = await axios.get<string>(feedUrl, {
@@ -22,8 +21,7 @@ export async function runWorker() {
         headers: {
           "User-Agent":
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-          Accept:
-            "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         },
       });
 
@@ -43,18 +41,21 @@ export async function runWorker() {
           data: {
             title: item.title || "No title",
             link: item.link,
-            content: item.contentSnippet || "",
+            content: item.contentSnippet || item.content || "",
             publishedAt: item.pubDate ? new Date(item.pubDate) : null,
             hash: item.link,
             sourceId: source.id,
           },
         });
-      } catch {
-      
+      } catch (err) {
+        // ignore duplicates and continue
         continue;
       }
     }
   }
 
+  await prisma.$disconnect();
   console.log("Worker finished");
 }
+
+export default runWorker;
