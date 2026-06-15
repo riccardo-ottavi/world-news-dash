@@ -12,6 +12,10 @@ app.use(express.json());
 app.use("/news", newsRoutes);
 app.use("/sources", sourceRoutes);
 
+app.get("/health", (req, res) => {
+  res.json({ status: "healthy" });
+});
+
 const PORT = 3000;
 
 app.listen(PORT, () => {
